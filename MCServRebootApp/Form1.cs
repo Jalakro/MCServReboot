@@ -245,55 +245,72 @@ namespace MCServRebootApp
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (new FileInfo(datapath).Length > 0)
-            {
-                if (textBox1.Text.Length > 0)
-                {
-                    path = textBox1.Text;
+            bool exist = false;
+            if (File.Exists(textBox1.Text))
+                exist = true;
 
-                    File.Create(datapath).Close();
-                    using (StreamWriter sw = File.AppendText(datapath))
+            if (!exist)
+            {
+                MessageBox.Show("Text input unvalid, file does not exist");
+                if (path.Length > 0)
+                    textBox1.Text = path;
+                else
+                    textBox1.Text = "";
+            }
+                
+
+            if (exist)
+            {
+                if (new FileInfo(datapath).Length > 0)
+                {
+                    if (textBox1.Text.Length > 0)
                     {
-                        sw.WriteLine(path);
-                        sw.WriteLine(backup_dest_path);
-                        sw.Close();
+                        path = textBox1.Text;
+
+                        File.Create(datapath).Close();
+                        using (StreamWriter sw = File.AppendText(datapath))
+                        {
+                            sw.WriteLine(path);
+                            sw.WriteLine(backup_dest_path);
+                            sw.Close();
+                        }
+                    }
+                    else
+                    {
+                        textBox1.Text = path;
                     }
                 }
                 else
                 {
-                    textBox1.Text = path;
-                }
-            }
-            else
-            {
-                if (textBox1.Text.Length > 0)
-                {
-                    path = textBox1.Text;
-
-                    File.Create(datapath).Close();
-                    using (StreamWriter sw = File.AppendText(datapath))
+                    if (textBox1.Text.Length > 0)
                     {
-                        sw.WriteLine(path);
-                        sw.WriteLine(backup_dest_path);
-                        sw.Close();
-                    }
-                }
-            }
+                        path = textBox1.Text;
 
-            if (path.Length > 0)
-            {
-                int count = 0;
-                char charToReset = '/';
-                foreach (char c in path)
-                {
-                    count++;
-                    if (c == charToReset)
-                    {
-                        count = 0;
+                        File.Create(datapath).Close();
+                        using (StreamWriter sw = File.AppendText(datapath))
+                        {
+                            sw.WriteLine(path);
+                            sw.WriteLine(backup_dest_path);
+                            sw.Close();
+                        }
                     }
                 }
 
-                backup_source_folder = path.Remove(path.Length - count - 1, count + 1);
+                if (path.Length > 0)
+                {
+                    int count = 0;
+                    char charToReset = '/';
+                    foreach (char c in path)
+                    {
+                        count++;
+                        if (c == charToReset)
+                        {
+                            count = 0;
+                        }
+                    }
+
+                    backup_source_folder = path.Remove(path.Length - count - 1, count + 1);
+                }
             }
         }
 
@@ -304,37 +321,53 @@ namespace MCServRebootApp
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (new FileInfo(datapath).Length > 0)
-            {
-                if (textBox2.Text.Length > 0)
-                {
-                    backup_dest_path = textBox2.Text;
+            bool exist = false;
+            if (Directory.Exists(textBox2.Text))
+                exist = true;
 
-                    File.Create(datapath).Close();
-                    using (StreamWriter sw = File.AppendText(datapath))
+            if (!exist)
+            {
+                MessageBox.Show("Text input unvalid, directory does not exist");
+                if (backup_dest_path.Length > 0)
+                    textBox2.Text = path;
+                else
+                    textBox2.Text = "";
+            }
+
+            if (exist)
+            {
+                if (new FileInfo(datapath).Length > 0)
+                {
+                    if (textBox2.Text.Length > 0)
                     {
-                        sw.WriteLine(path);
-                        sw.WriteLine(backup_dest_path);
-                        sw.Close();
+                        backup_dest_path = textBox2.Text;
+
+                        File.Create(datapath).Close();
+                        using (StreamWriter sw = File.AppendText(datapath))
+                        {
+                            sw.WriteLine(path);
+                            sw.WriteLine(backup_dest_path);
+                            sw.Close();
+                        }
+                    }
+                    else
+                    {
+                        textBox2.Text = backup_dest_path;
                     }
                 }
                 else
                 {
-                    textBox2.Text = backup_dest_path;
-                }
-            }
-            else
-            {
-                if (textBox2.Text.Length > 0)
-                {
-                    backup_dest_path = textBox2.Text;
-
-                    File.Create(datapath).Close();
-                    using (StreamWriter sw = File.AppendText(datapath))
+                    if (textBox2.Text.Length > 0)
                     {
-                        sw.WriteLine(path);
-                        sw.WriteLine(backup_dest_path);
-                        sw.Close();
+                        backup_dest_path = textBox2.Text;
+
+                        File.Create(datapath).Close();
+                        using (StreamWriter sw = File.AppendText(datapath))
+                        {
+                            sw.WriteLine(path);
+                            sw.WriteLine(backup_dest_path);
+                            sw.Close();
+                        }
                     }
                 }
             }
